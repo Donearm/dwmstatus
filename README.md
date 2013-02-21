@@ -1,6 +1,6 @@
 # dwmstatus
 
-This project is a fork of the suckless project by the same name.
+This project is a fork of the [suckless project][2] by the same name.
 
 ## About
 
@@ -30,14 +30,20 @@ are a few things you can do just editing this config file, like setting
 location, where your battery is located, etc. To edit the order that things are
 displayed, you will have to edit dwmstatus.c's `status()` function.
 
-If you're on Arch, then there is a package on the aur, `dwmstatus-ks`, that you
-can use. Change a few things and you can use it with the git repository as well.
+You can also add functions by placing them in the includes folder and adding a
+`#include "includes/yourfile.c"` in the `dwmstatus.c` file.
+
+If you're on Arch, then there are packages on the aur, `dwmstatus-ks` and
+`dwmstatus-ks-git`, that you can use to build the status bar.
 
 ## Bugs
 
-Please add bugs to the bitbucket project or email me at 1007380 [at] gmail [Ðot]
-com. 
+Please add bugs to the [bitbucket project][1] or email me at
+1007380[at]gmail[Ðot]com.
 
 ## Copyright Info
 
 See LICENSE.
+
+[1]: https://bitbucket.org/KaiSforza/dwmstatus
+[2]: http://dwm.suckless.org/dwmstatus

@@ -3,8 +3,12 @@
 #include <sys/time.h>
 #include <time.h>
 
-
 static Display *dpy;
+
+/**
+ * return formatted string
+ * see printf(3)
+ */
 
 char *
 smprintf(char *fmt, ...)
@@ -30,11 +34,19 @@ smprintf(char *fmt, ...)
     return ret;
 }
 
+/**
+ * sets your timezone
+ */
+
 void
 settz(char *tzname)
 {
     setenv("TZ", tzname, 1);
 }
+
+/**
+ * returns the actual time
+ */
 
 char *
 mktimes(char *fmt, char *tzname)
@@ -60,12 +72,21 @@ mktimes(char *fmt, char *tzname)
     return smprintf("%s", buf);
 }
 
+/**
+ * for setting the status
+ */
+
 void
 setstatus(char *str)
 {
     XStoreName(dpy, DefaultRootWindow(dpy), str);
     XSync(dpy, False);
 }
+
+/**
+ * gets and returns the load average as a set of three
+ * space separated values
+ */
 
 char *
 loadavg(void)
@@ -79,6 +100,11 @@ loadavg(void)
 
     return smprintf("%.2f %.2f %.2f", avgs[0], avgs[1], avgs[2]);
 }
+
+/**
+ * read a file and return the contents
+ * used in battery.h
+ */
 
 char *
 readfile(char *base, char *file)
@@ -104,6 +130,11 @@ readfile(char *base, char *file)
 
     return smprintf("%s", line);
 }
+
+/**
+ * used to run a command at different intervals than the main
+ * status command.
+ */
 
 int
 runevery(time_t *ltime, int sec)

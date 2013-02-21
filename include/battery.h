@@ -3,6 +3,12 @@
  * according to a random scheme. So just check for both possibilities.
  */
 
+/**
+ * Calculates the battery useage and time remaining
+ * Takes the base directory to find your battery information
+ * as an argument.
+ */
+
 char *
 getbattery(char *base)
 {
@@ -96,7 +102,8 @@ getbattery(char *base)
     if (seconds < 0 || minutes < 0 || hours < 0)
         ret = smprintf("%s: Calculating...", stat);
     else
-        ret = smprintf("%s: %.2lf%% %02d:%02d:%02d", stat, (((double)remcap / (double)descap) * 100), hours, minutes, seconds);
+        ret = smprintf("%s: %.2lf%% %02d:%02d:%02d", stat,
+            (((double)remcap / (double)descap) * 100), hours, minutes, seconds);
     if(!stat) { free(stat); }
     return ret;
 }

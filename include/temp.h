@@ -1,6 +1,12 @@
 /*
  * TEMPERATURE STUFF
  */
+
+/**
+ * Gets the temperature of your system.
+ * Takes the sensor base and sensor as arguments.
+ */
+
 char *
 gettemperature(char *base, char *sensor)
 {

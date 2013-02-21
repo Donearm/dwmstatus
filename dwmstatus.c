@@ -82,7 +82,9 @@ int
 main(int argc, char *argv[])
 {
     if(argc == 2 && !strcmp("-v", argv[1])) {
-        printf("dwmstatus %s © 2012-2013 William Giokas. See LICENSE for more info.\n",
+        printf(
+            "dwmstatus %s © 2012-2013 William Giokas.\n\
+              See LICENSE for more details.\n",
                 VERSION);
         return 0;
     }

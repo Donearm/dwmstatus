@@ -33,6 +33,7 @@ dist: clean
 	@echo creating dist tarball
 	@mkdir -p dist
 	@git archive -o dist/${NAME}-${VERSION}.tar.gz --prefix="${NAME}-${VERSION}/" -9 v${VERSION}
+	@gpg --detach-sign dist/${NAME}-${VERSION}.tar.gz
 
 install: all
 	@echo installing executable file to ${DESTDIR}${PREFIX}/bin

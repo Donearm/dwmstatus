@@ -20,8 +20,13 @@ getnameinfo(const struct sockaddr *sa, socklen_t salen,
         char *host, size_t hostlen,
         char *serv, size_t servlen, int flags);
 
+/**
+ * Used to parse the /proc/net/dev file to get the network useage.
+ */
+
 int 
-parse_netdev(unsigned long long int *receivedabs, unsigned long long int *sentabs, char *netdevice)
+parse_netdev(unsigned long long int *receivedabs,
+    unsigned long long int *sentabs, char *netdevice)
 {
     char *buf;
     char *netstart;
@@ -40,8 +45,9 @@ parse_netdev(unsigned long long int *receivedabs, unsigned long long int *sentab
     while (fgets(buf, bufsize, devfd)) {
         if ((netstart = strstr(buf, netdevice)) != NULL) {
             netdevlength = sizeof(netdevice) / sizeof(char);
-            /* With thanks to the conky project at http://conky.sourceforge.net/ */
-            sscanf(netstart + netdevlength, "%llu  %*d     %*d  %*d  %*d  %*d   %*d        %*d       %llu",\
+            /* Thanks to the conky project: http://conky.sourceforge.net/ */
+            sscanf(netstart + netdevlength,
+                "%llu  %*d     %*d  %*d  %*d  %*d   %*d        %*d       %llu",
                    receivedabs, sentabs);
             fclose(devfd);
             free(buf);
@@ -52,6 +58,14 @@ parse_netdev(unsigned long long int *receivedabs, unsigned long long int *sentab
     free(buf);
     return 1;
 }
+
+/**
+ * Calculates the per second network useage.
+ * Note: This function takes 1 (one) second to execute,
+ * so take that into account in your status formatting.
+ * (Subtract one from the refresh rate you want to get
+ * the refresh rate you should be using.
+ */
 
 char *
 get_netusage(char *netdevice)
@@ -102,6 +116,11 @@ get_netusage(char *netdevice)
     return retstr;
 }
 
+/**
+ * Gets your current ip address on 'interface'
+ * Shamelessly taken from i3status, because i3status is
+ * pretty awesome.
+ */
 char *
 get_ip_addr(const char *interface)
 {
@@ -138,8 +157,10 @@ get_ip_addr(const char *interface)
             }
 
         int ret;
-    if ((ret = getnameinfo(addrp->ifa_addr, len, part, sizeof(part), NULL, 0, NI_NUMERICHOST)) != 0) {
-            fprintf(stderr, "dwmstatus: getnameinfo(): %s\n", gai_strerror(ret));
+    if ((ret = getnameinfo(addrp->ifa_addr, len, part, sizeof(part), NULL, 0,
+            NI_NUMERICHOST)) != 0) {
+            fprintf(stderr, "dwmstatus: getnameinfo(): %s\n",
+                gai_strerror(ret));
             freeifaddrs(ifaddr);
             return "no IP";
         }
